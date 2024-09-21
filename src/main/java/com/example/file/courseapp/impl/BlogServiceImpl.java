@@ -2,11 +2,12 @@ package com.example.file.courseapp.impl;
 
 import com.example.file.courseapp.dto.BlogDto;
 import com.example.file.courseapp.entity.Blog;
+import com.example.file.courseapp.entity.Course;
 import com.example.file.courseapp.exception.NotFoundException;
 import com.example.file.courseapp.repository.BlogRepository;
+import com.example.file.courseapp.repository.CourseRepository;
 import com.example.file.courseapp.service.BlogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public ResponseEntity<?> create(BlogDto dto) {
@@ -77,13 +79,14 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public ResponseEntity<?> getAllPage(Pageable pageable) {
         List<Blog> blogs = this.blogRepository.findAll();
+         List<Course> all = this.courseRepository.findAll();
         if (!blogs.isEmpty()) {
-
             List<BlogDto> blogDtos = blogs.stream()
                     .map(blog -> new BlogDto(
                             blog.getId(),
                             blog.getTitle(),
                             blog.getContent(),
+                            all,
                             blog.getPublishDate(),
                             blog.getUpdatedAt()
                     )).collect(Collectors.toList());

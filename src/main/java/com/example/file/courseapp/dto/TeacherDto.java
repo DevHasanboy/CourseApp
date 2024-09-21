@@ -20,6 +20,7 @@ public class TeacherDto {
     private String phoneNumber;
     private String address;
     private Integer age;
+    private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 }

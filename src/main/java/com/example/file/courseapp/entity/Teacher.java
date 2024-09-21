@@ -23,6 +23,8 @@ public class Teacher {
     private String email;
     private String phoneNumber;
     private String address;
+    @Column(columnDefinition = "TEXT")
+    private String description;
     private Integer age;
     private LocalDate createdAt;
     private LocalDate updatedAt;

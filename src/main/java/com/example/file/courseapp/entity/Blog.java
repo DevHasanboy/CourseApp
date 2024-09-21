@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +20,8 @@ public class Blog {
     private Long id;
     private String title;
     private String content;
+    @OneToMany
+    private List<Course> courseList;
     private LocalDateTime publishDate;
     private LocalDateTime updatedAt;
 }

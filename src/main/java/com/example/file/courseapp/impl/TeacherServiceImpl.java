@@ -30,6 +30,7 @@ public class TeacherServiceImpl implements TeacherService {
         newTeacher.setAddress(teacher.getAddress());
         newTeacher.setPhoneNumber(teacher.getPhoneNumber());
         newTeacher.setCourseId(teacher.getCourseId());
+        newTeacher.setDescription(teacher.getDescription());
         newTeacher.setCreatedAt(LocalDate.now());
         teacherRepository.save(newTeacher);
         return ResponseEntity.status(HttpStatus.CREATED).body(newTeacher);
@@ -53,6 +54,7 @@ public class TeacherServiceImpl implements TeacherService {
         tech.setFirstName(teacher.getFirstName());
         tech.setLastName(teacher.getLastName());
         tech.setAddress(teacher.getAddress());
+        tech.setDescription(teacher.getDescription());
         tech.setUpdatedAt(LocalDate.now());
         teacherRepository.save(tech);
         return ResponseEntity.status(HttpStatus.OK).body(tech);
@@ -91,6 +93,7 @@ public class TeacherServiceImpl implements TeacherService {
                             teacher.getPhoneNumber(),
                             teacher.getAddress(),
                             teacher.getAge(),
+                            teacher.getDescription(),
                             teacher.getCreatedAt(),
                             teacher.getUpdatedAt()
                     )).toList();
