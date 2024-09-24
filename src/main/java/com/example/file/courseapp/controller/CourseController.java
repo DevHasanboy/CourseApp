@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -29,6 +30,7 @@ public class CourseController {
             @ApiResponse(responseCode = "200", description = "course successfully created"),
             @ApiResponse(responseCode = "404", description = " course not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PostMapping("/create/")
     public ResponseEntity<?> create(@RequestBody CourseDto dto) {
         ResponseEntity response = this.service.create(dto);
@@ -52,6 +54,7 @@ public class CourseController {
             @ApiResponse(responseCode = "200", description = "course update successfully by id"),
             @ApiResponse(responseCode = "404", description = " course not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@RequestBody CourseDto dto, @PathVariable Long id) {
         ResponseEntity response = this.service.update(dto, id);
@@ -63,6 +66,7 @@ public class CourseController {
             @ApiResponse(responseCode = "200", description = "course delete successfully by id"),
             @ApiResponse(responseCode = "404", description = " course not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         ResponseEntity response = this.service.delete(id);

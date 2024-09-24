@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,9 +28,10 @@ public class TeacherController {
             @ApiResponse(responseCode = "200", description = "teacher successfully created"),
             @ApiResponse(responseCode = "404", description = " teacher not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PostMapping("/create/")
-    public ResponseEntity<?> create(@RequestBody TeacherDto dto){
-        ResponseEntity response=this.teacherService.createTeacher(dto);
+    public ResponseEntity<?> create(@RequestBody TeacherDto dto) {
+        ResponseEntity response = this.teacherService.createTeacher(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -39,8 +41,8 @@ public class TeacherController {
             @ApiResponse(responseCode = "404", description = " teacher not found")
     })
     @GetMapping("/get/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id){
-        ResponseEntity response=this.teacherService.findTeacherById(id);
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        ResponseEntity response = this.teacherService.findTeacherById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -49,10 +51,10 @@ public class TeacherController {
             @ApiResponse(responseCode = "200", description = "teacher update successfully by id"),
             @ApiResponse(responseCode = "404", description = " teacher not found")
     })
-
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@RequestBody TeacherDto dto,@PathVariable Long id){
-        ResponseEntity response=this.teacherService.updateTeacher(dto,id);
+    public ResponseEntity<?> update(@RequestBody TeacherDto dto, @PathVariable Long id) {
+        ResponseEntity response = this.teacherService.updateTeacher(dto, id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -61,9 +63,10 @@ public class TeacherController {
             @ApiResponse(responseCode = "200", description = "teacher delete successfully by id"),
             @ApiResponse(responseCode = "404", description = " teacher not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
-    public  ResponseEntity<?> delete(@PathVariable Long id){
-        ResponseEntity response=this.teacherService.deleteTeacher(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        ResponseEntity response = this.teacherService.deleteTeacher(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -73,8 +76,8 @@ public class TeacherController {
             @ApiResponse(responseCode = "404", description = " teacher not found")
     })
     @GetMapping("/get_all")
-    public ResponseEntity<?> getAll(){
-        ResponseEntity response=this.teacherService.findAllTeachers();
+    public ResponseEntity<?> getAll() {
+        ResponseEntity response = this.teacherService.findAllTeachers();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -84,11 +87,11 @@ public class TeacherController {
             @ApiResponse(responseCode = "404", description = " course not found")
     })
     @GetMapping("/get_all_page")
-    public ResponseEntity<?> getAllPage(@RequestParam(defaultValue = "0")  int page,
-                                        @RequestParam(defaultValue = "10")  int size
-    ){
-        Pageable pageable= PageRequest.of(page, size);
-        ResponseEntity<?> pag=this.teacherService.getAllPage( pageable);
+    public ResponseEntity<?> getAllPage(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        ResponseEntity<?> pag = this.teacherService.getAllPage(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(pag);
 
     }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 
@@ -37,6 +38,7 @@ public class BlogController {
             @ApiResponse(responseCode = "200", description = "blog get successfully by id"),
             @ApiResponse(responseCode = "404", description = " blog not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         ResponseEntity response = this.blogService.get(id);
@@ -48,6 +50,7 @@ public class BlogController {
             @ApiResponse(responseCode = "200", description = "blog update successfully by id"),
             @ApiResponse(responseCode = "404", description = " blog not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@RequestBody BlogDto blog, @PathVariable Long id) {
         ResponseEntity response = this.blogService.update(blog, id);
@@ -59,6 +62,7 @@ public class BlogController {
             @ApiResponse(responseCode = "200", description = "blog delete successfully by id"),
             @ApiResponse(responseCode = "404", description = " blog not found")
     })
+    @PreAuthorize(value = "hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         ResponseEntity response = this.blogService.delete(id);

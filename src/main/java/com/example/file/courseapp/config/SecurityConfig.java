@@ -52,7 +52,9 @@ public class SecurityConfig {
                                     "/v3/api-docs/**",
                                     "/api/v1/course/get/",
                                     "/api/v1/teacher/get_all",
-                                    "/api/v1/blog/**"
+                                    "/api/v1/blog/**",
+                                    "/api/v1/file/**",
+                                    "/api/v1/video/**"
                                     ).permitAll()
                             .anyRequest().authenticated();
                 })
